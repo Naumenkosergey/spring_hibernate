@@ -33,12 +33,13 @@ public class UserDaoImp implements UserDao {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<User> getUserByCar(String model, int series) {
+    public User getUserByCar(String model, int series) {
         String hql = "from User u where u.car.model=:model and u.car.series=:series";
         try {
+
             TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery(hql);
             query.setParameter("model", model).setParameter("series", series);
-            return query.getResultList();
+            return query.setMaxResults(1).getSingleResult();
         } catch (Throwable e) {
             return null;
         }

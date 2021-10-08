@@ -37,14 +37,9 @@ public class MainApp {
         System.out.println();
         String model = "alfaRomeo";
         int series = 159;
-        List<User> usersByCar = userService.getUserByCar(model, series);
+        User user = userService.getUserByCar(model, series);
         System.out.print("автомобиль " + model + " " + series);
-        if (usersByCar != null) {
-            System.out.println(" принадмежит ");
-            usersByCar.forEach(System.out::println);
-        } else {
-            System.out.println(" не имеет хозяина");
-        }
+        System.out.println(user != null ? " принадмежит " + user : " не имеет хозяина");
         System.out.println();
         context.close();
     }
