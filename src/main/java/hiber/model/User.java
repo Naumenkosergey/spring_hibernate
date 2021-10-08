@@ -13,6 +13,7 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class User {
 
     @Id
@@ -28,9 +29,19 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    public User(String firstNam, String lastName, String email) {
-        this.firstName = firstNam;
+    @OneToOne(mappedBy = "user",
+            cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private Car car;
+
+    public User(String firstName, String lastName, String email) {
+        this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+    }
+
+    public Car setCarFromUser(Car car) {
+        this.car = car;
+        return this.car;
     }
 }

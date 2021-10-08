@@ -1,32 +1,38 @@
 package hiber.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "car")
+@Table(name = "cars")
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Car {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     @Column(name = "model")
     private String model;
+
     @Column(name = "series")
     private int series;
+
     @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     public Car(String model, int series) {
         this.model = model;
         this.series = series;
+    }
+
+    public User setUserFromCar(User user) {
+        this.user = user;
+        return this.user;
     }
 }
